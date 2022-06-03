@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 
 Future<Joke> fetchJoke() async {
   final response =
-  await http.get(Uri.parse('https://api.chucknorris.io/jokes/random'));
+      await http.get(Uri.parse('https://api.chucknorris.io/jokes/random'));
 
   return Joke.fromJson(jsonDecode(response.body));
 }
@@ -132,37 +132,37 @@ class _HomePageState extends State<HomePage> {
     showModalBottomSheet(
         context: context,
         builder: (context) => Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Padding(
-                padding: EdgeInsets.fromLTRB(20.0, 30.0, 20.0, 10.0),
-                child: Text(
-                  "You can contact me at:",
-                  textScaleFactor: 2,
-                )),
-            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
-                    padding: const EdgeInsets.all(30.0),
-                    child: const Icon(Icons.telegram)),
-                Container(
-                    padding: const EdgeInsets.all(30.0),
-                    child: const Text("@Dudukk"))
+                const Padding(
+                    padding: EdgeInsets.fromLTRB(20.0, 30.0, 20.0, 10.0),
+                    child: Text(
+                      "You can contact me at:",
+                      textScaleFactor: 2,
+                    )),
+                Row(
+                  children: [
+                    Container(
+                        padding: const EdgeInsets.all(30.0),
+                        child: const Icon(Icons.telegram)),
+                    Container(
+                        padding: const EdgeInsets.all(30.0),
+                        child: const Text("@Dudukk"))
+                  ],
+                ),
+                Row(
+                  children: [
+                    Container(
+                        padding: const EdgeInsets.all(30.0),
+                        child: const Icon(Icons.email)),
+                    Container(
+                        padding: const EdgeInsets.all(30.0),
+                        child: const Text("dyudin.german@mail.ru"))
+                  ],
+                )
               ],
-            ),
-            Row(
-              children: [
-                Container(
-                    padding: const EdgeInsets.all(30.0),
-                    child: const Icon(Icons.email)),
-                Container(
-                    padding: const EdgeInsets.all(30.0),
-                    child: const Text("dyudin.german@mail.ru"))
-              ],
-            )
-          ],
-        ));
+            ));
   }
 
   Widget _bodyPage(int page) {
@@ -238,16 +238,11 @@ class HomeBodyState extends State<HomeBody> {
               FutureBuilder<Joke>(
                 future: futureJoke,
                 builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return Padding(
-                        padding:
-                        const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-                        child: Text(snapshot.data!.value,
-                            textAlign: TextAlign.center));
-                  } else if (snapshot.hasError) {
-                    return Text('${snapshot.error}');
-                  }
-                  return const CircularProgressIndicator();
+                  return Padding(
+                      padding:
+                          const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                      child: Text(snapshot.data!.value,
+                          textAlign: TextAlign.center));
                 },
               ),
               Row(
@@ -293,7 +288,7 @@ class FavouriteBodyState extends State<FavouriteBody> {
   @override
   Widget build(BuildContext context) {
     final tiles = _saved.map(
-          (pair) {
+      (pair) {
         return ListTile(
           title: Text(pair),
         );
@@ -301,9 +296,9 @@ class FavouriteBodyState extends State<FavouriteBody> {
     );
     final divided = tiles.isNotEmpty
         ? ListTile.divideTiles(
-      context: context,
-      tiles: tiles,
-    ).toList()
+            context: context,
+            tiles: tiles,
+          ).toList()
         : <Widget>[];
 
     return MaterialApp(
@@ -311,8 +306,8 @@ class FavouriteBodyState extends State<FavouriteBody> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
           body: ListView(
-            children: divided,
-          )),
+        children: divided,
+      )),
     );
   }
 }
