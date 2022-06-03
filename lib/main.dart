@@ -241,8 +241,9 @@ class HomeBodyState extends State<HomeBody> {
                   return Padding(
                       padding:
                           const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-                      child: Text(snapshot.data!.value,
-                          textAlign: TextAlign.center));
+                      child: SafeArea(
+                          child: Text(snapshot.data!.value,
+                              textAlign: TextAlign.center)));
                 },
               ),
               Row(
