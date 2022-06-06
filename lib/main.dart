@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 
 Future<Joke> fetchJoke() async {
   final response =
-      await http.get(Uri.parse('https://api.chucknorris.io/jokes/random'));
+  await http.get(Uri.parse('https://api.chucknorris.io/jokes/random'));
 
   return Joke.fromJson(jsonDecode(response.body));
 }
@@ -131,7 +131,8 @@ class _HomePageState extends State<HomePage> {
   void showBottomSheet(BuildContext context) {
     showModalBottomSheet(
         context: context,
-        builder: (context) => Column(
+        builder: (context) =>
+            Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -222,8 +223,9 @@ class HomeBodyState extends State<HomeBody> {
       title: 'Chuck Norris jokes',
       theme: ThemeData.dark(),
       home: Scaffold(
-        body: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+
+        body: Padding(padding: const EdgeInsets.fromLTRB(0, 100, 0, 0), child: Column(
+          // mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
@@ -240,10 +242,9 @@ class HomeBodyState extends State<HomeBody> {
                 builder: (context, snapshot) {
                   return Padding(
                       padding:
-                          const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-                      child: SafeArea(
-                          child: Text(snapshot.data!.value,
-                              textAlign: TextAlign.center)));
+                      const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+                      child: Text(snapshot.data!.value,
+                          textAlign: TextAlign.center));
                 },
               ),
               Row(
@@ -267,7 +268,7 @@ class HomeBodyState extends State<HomeBody> {
                               color: Colors.blue,
                             )))
                   ])
-            ]),
+            ])),
       ),
     );
   }
@@ -289,7 +290,7 @@ class FavouriteBodyState extends State<FavouriteBody> {
   @override
   Widget build(BuildContext context) {
     final tiles = _saved.map(
-      (pair) {
+          (pair) {
         return ListTile(
           title: Text(pair),
         );
@@ -297,9 +298,9 @@ class FavouriteBodyState extends State<FavouriteBody> {
     );
     final divided = tiles.isNotEmpty
         ? ListTile.divideTiles(
-            context: context,
-            tiles: tiles,
-          ).toList()
+      context: context,
+      tiles: tiles,
+    ).toList()
         : <Widget>[];
 
     return MaterialApp(
@@ -307,8 +308,8 @@ class FavouriteBodyState extends State<FavouriteBody> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
           body: ListView(
-        children: divided,
-      )),
+            children: divided,
+          )),
     );
   }
 }
