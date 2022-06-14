@@ -1,35 +1,13 @@
-import 'dart:async';
-import 'dart:convert';
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'favourite_body.dart';
+import 'home_body.dart';
 
-Future<Joke> fetchJoke() async {
-  final response =
-  await http.get(Uri.parse('https://api.chucknorris.io/jokes/random'));
-
-  return Joke.fromJson(jsonDecode(response.body));
+Future<void> main() async {
+  runApp(const MyApp());
 }
 
-class Joke {
-  final String value;
-
-  const Joke({
-    required this.value,
-  });
-
-  factory Joke.fromJson(Map<String, dynamic> json) {
-    return Joke(
-      value: json['value'],
-    );
-  }
-}
-
-void main() => runApp(const MyApp());
-
-final _saved = <String>{};
-final _imageUrls = <String>[
+final saved = <String>{};
+final imageUrls = <String>[
   'https://m.media-amazon.com/images/I/51LK4ZBSGqL.jpg',
   'https://imgix.ranker.com/user_node_img/50016/1000312150/original/chuck-s-email-photo-u1?auto=format&q=60&fit=crop&fm=pjpg&dpr=2&w=375',
   'https://static3.srcdn.com/wordpress/wp-content/uploads/2020/03/Chuck-Norris-Force.jpg?q=50&fit=crop&w=450&h=389&dpr=1.5'
@@ -174,143 +152,6 @@ class _HomePageState extends State<HomePage> {
         return const FavouriteBody();
     }
     throw Exception('Unknown page');
-  }
-}
-
-class HomeBody extends StatefulWidget {
-  const HomeBody({Key? key}) : super(key: key);
-
-  @override
-  HomeBodyState createState() => HomeBodyState();
-}
-
-class HomeBodyState extends State<HomeBody> {
-  late Future<Joke> futureJoke;
-  String currentJoke = _imageUrls[0];
-  int next = Random().nextInt(_imageUrls.length);
-
-  @override
-  void initState() {
-    super.initState();
-    futureJoke = fetchJoke();
-    currentJoke = _imageUrls[next];
-    next = Random().nextInt(_imageUrls.length);
-  }
-
-  void _updateJoke() {
-    setState(() {
-      futureJoke = fetchJoke();
-      currentJoke = _imageUrls[next];
-      next = Random().nextInt(_imageUrls.length);
-    });
-  }
-
-  void _addToFavourites() async {
-    Joke jk = await futureJoke;
-    setState(() {
-      _saved.add(jk.value);
-      futureJoke = fetchJoke();
-      currentJoke = _imageUrls[next];
-      next += 1;
-      next %= _imageUrls.length;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Chuck Norris jokes',
-      theme: ThemeData.dark(),
-      home: Scaffold(
-
-        body: Padding(padding: const EdgeInsets.fromLTRB(0, 100, 0, 0), child: Column(
-          // mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                  width: 200,
-                  height: 200,
-                  decoration: const BoxDecoration(
-                    color: Colors.deepPurple,
-                  ),
-                  child: ClipRRect(
-                    child: Image.network(currentJoke, fit: BoxFit.fill),
-                  )),
-              FutureBuilder<Joke>(
-                future: futureJoke,
-                builder: (context, snapshot) {
-                  return Padding(
-                      padding:
-                      const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-                      child: Text(snapshot.data!.value,
-                          textAlign: TextAlign.center));
-                },
-              ),
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                        padding: const EdgeInsets.all(30.0),
-                        child: IconButton(
-                            onPressed: () => _addToFavourites(),
-                            icon: const Icon(
-                              Icons.save,
-                              color: Colors.blue,
-                            ))),
-                    Container(
-                        padding: const EdgeInsets.all(30.0),
-                        child: IconButton(
-                            onPressed: () => _updateJoke(),
-                            icon: const Icon(
-                              Icons.thumb_up,
-                              color: Colors.blue,
-                            )))
-                  ])
-            ])),
-      ),
-    );
-  }
-}
-
-class FavouriteBody extends StatefulWidget {
-  const FavouriteBody({Key? key}) : super(key: key);
-
-  @override
-  FavouriteBodyState createState() => FavouriteBodyState();
-}
-
-class FavouriteBodyState extends State<FavouriteBody> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final tiles = _saved.map(
-          (pair) {
-        return ListTile(
-          title: Text(pair),
-        );
-      },
-    );
-    final divided = tiles.isNotEmpty
-        ? ListTile.divideTiles(
-      context: context,
-      tiles: tiles,
-    ).toList()
-        : <Widget>[];
-
-    return MaterialApp(
-      theme: ThemeData.dark(),
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-          body: ListView(
-            children: divided,
-          )),
-    );
   }
 }
 
