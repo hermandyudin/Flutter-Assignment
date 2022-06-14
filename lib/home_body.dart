@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'Joke.dart';
 import 'main.dart';
+// ignore: depend_on_referenced_packages
 import 'package:connectivity_plus/connectivity_plus.dart';
 
 class HomeBody extends StatefulWidget {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:task/search.dart';
 import 'favourite_body.dart';
 import 'home_body.dart';
 
@@ -58,6 +59,8 @@ class BottomMenu extends StatelessWidget {
             label: 'Jokes'),
         BottomNavigationBarItem(
             icon: Icon(Icons.favorite, color: Colors.red), label: 'Favourite'),
+        BottomNavigationBarItem(
+            icon: Icon(Icons.search, color: Colors.grey), label: 'Search')
       ],
     );
   }
@@ -150,6 +153,8 @@ class _HomePageState extends State<HomePage> {
         return const HomeBody();
       case 1:
         return const FavouriteBody();
+      case 2:
+        return const SearchBody();
     }
     throw Exception('Unknown page');
   }
