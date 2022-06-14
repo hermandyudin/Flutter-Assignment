@@ -2,6 +2,8 @@
 
 Flutter assignment. Tinder-like application with jokes about Chuck Norris
 
+Working APK is attached in files
+
 ## About the app
 
 ### Main page
